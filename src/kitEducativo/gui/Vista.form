@@ -285,7 +285,7 @@
                   <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="delEmpleado"/>
+                  <actionCommand value="delEmpresa"/>
                   <enabled value="false"/>
                   <text value="Eliminar"/>
                 </properties>
@@ -295,7 +295,7 @@
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="addEmpleado"/>
+                  <actionCommand value="addEmpresa"/>
                   <enabled value="false"/>
                   <text value="Añadir"/>
                 </properties>
@@ -305,7 +305,7 @@
                   <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="modEmpleado"/>
+                  <actionCommand value="modEmpresa"/>
                   <enabled value="false"/>
                   <text value="Modificar"/>
                 </properties>
@@ -425,7 +425,7 @@
                   <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="delDepartamento"/>
+                  <actionCommand value="delKits"/>
                   <enabled value="false"/>
                   <text value="Eliminar"/>
                 </properties>
@@ -435,7 +435,7 @@
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="modDepartamento"/>
+                  <actionCommand value="modKits"/>
                   <enabled value="false"/>
                   <text value="Modificar"/>
                 </properties>
@@ -482,7 +482,7 @@
                   <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="addDepartamento"/>
+                  <actionCommand value="addKits"/>
                   <enabled value="false"/>
                   <text value="Añadir"/>
                 </properties>
@@ -644,4 +644,11 @@
       </tabbedpane>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="buttonGroup1">
+      <member id="48713"/>
+      <member id="cb9cf"/>
+      <member id="54b00"/>
+    </group>
+  </buttonGroups>
 </form>

@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Vista extends JFrame {
-    private JPanel panelPrincipal;
+     JPanel panelPrincipal;
 
     // Productos
     JTextField txtMarcaProducto;
@@ -50,19 +50,19 @@ public class Vista extends JFrame {
 
     JTextField txtBuscarKitEducativo;
     JList<Kit_Educativo> listBusquedaKitEducativo;
-    private JCheckBox usadoCheckBox;
-    private JCheckBox nuevoCheckBox;
-    private JCheckBox reacondicionadoCheckBox;
-    private JTextField txtDescripcionKit;
-    private JTextField txtCantidadKit;
-    private JComboBox comboBoxKitEmpresa;
-    private JTextField txtPrecioKit;
-    private JSlider sliderKitEducativo;
-    private JTextField txtNombreProducto;
-    private JTextField txtDescripcionEmpresa;
-    private JTextField txtUbicacionEmpresa;
-    private JSlider sliderValorcaion;
-    private JComboBox comboKitProducto;
+     JCheckBox usadoCheckBox;
+     JCheckBox nuevoCheckBox;
+     JCheckBox reacondicionadoCheckBox;
+     JTextField txtDescripcionKit;
+     JTextField txtCantidadKit;
+     JComboBox comboBoxKitEmpresa;
+     JTextField txtPrecioKit;
+     JSlider sliderKitEducativo;
+     JTextField txtNombreProducto;
+     JTextField txtDescripcionEmpresa;
+     JTextField txtUbicacionEmpresa;
+     JSlider sliderValorcaion;
+     JComboBox comboKitProducto;
 
     // Modelos
     DefaultListModel<Producto> dlmProductos;
@@ -89,7 +89,7 @@ public class Vista extends JFrame {
         inicializarMenu();
     }
 
-    private void inicializarModelos() {
+     void inicializarModelos() {
         dlmProductos = new DefaultListModel<>();
         listProductos.setModel(dlmProductos);
         dlmEmpleados = new DefaultListModel<>();
@@ -104,7 +104,7 @@ public class Vista extends JFrame {
         listBusquedaKitEducativo.setModel(dlmDepartamentosBusqueda);
     }
 
-    private void inicializarMenu() {
+     void inicializarMenu() {
         itemConectar = new JMenuItem("Conectar");
         itemConectar.setActionCommand("conexion");
         itemSalir = new JMenuItem("Salir");

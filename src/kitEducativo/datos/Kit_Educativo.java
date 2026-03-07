@@ -8,13 +8,13 @@ public class Kit_Educativo {
     private ObjectId id;
     private String nombre;
     private String descripcion;
-    private ObjectId cantidad;
+    private int cantidad;
     private ObjectId empresasKit;
     private ObjectId productoKit;
     private LocalDate fechaCreacion;
     private LocalDate fechaActualizacion;
-    private float precio;
-    private ObjectId valoracion;
+    private double precio;
+    private int valoracion;
 
     public ObjectId getId() {
         return id;
@@ -40,11 +40,11 @@ public class Kit_Educativo {
         this.descripcion = descripcion;
     }
 
-    public ObjectId getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(ObjectId cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -80,23 +80,23 @@ public class Kit_Educativo {
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public ObjectId getValoracion() {
+    public int getValoracion() {
         return valoracion;
     }
 
-    public void setValoracion(ObjectId valoracion) {
+    public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
     }
 
-    public Kit_Educativo(ObjectId id, String nombre, String descripcion, ObjectId cantidad, ObjectId empresasKit, ObjectId productoKit, LocalDate fechaCreacion, LocalDate fechaActualizacion, float precio, ObjectId valoracion) {
+    public Kit_Educativo(ObjectId id, String nombre, String descripcion, int cantidad, ObjectId empresasKit, ObjectId productoKit, LocalDate fechaCreacion, LocalDate fechaActualizacion, double precio, int valoracion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;

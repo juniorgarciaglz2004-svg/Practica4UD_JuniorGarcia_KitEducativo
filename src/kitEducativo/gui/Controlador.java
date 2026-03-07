@@ -1,6 +1,7 @@
 package kitEducativo.gui;
 
 import kitEducativo.datos.Empresa;
+import kitEducativo.datos.EstadoProducto;
 import kitEducativo.datos.Kit_Educativo;
 import kitEducativo.datos.Producto;
 import kitEducativo.util.Util;
@@ -28,11 +29,11 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         try {
             modelo.conectar();
             vista.itemConectar.setText("Desconectar");
-            vista.setTitle("Bar Manolo - <CONECTADO>");
+            vista.setTitle("Kit Educativos");
             setBotonesActivados(true);
             listarProductos();
-            listarEmpleados();
-            listarDepartamentos();
+            listarEmpresas();
+            listarKits();
         } catch (Exception ex) {
             Util.mostrarMensajeError("Imposible establecer conexión con el servidor.");
         }
@@ -42,9 +43,11 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         vista.btnAddProducto.addActionListener(listener);
         vista.btnModProducto.addActionListener(listener);
         vista.btnDelProducto.addActionListener(listener);
+
         vista.btnAddEmpresa.addActionListener(listener);
         vista.btnModEmpresa.addActionListener(listener);
         vista.btnDelEmpresa.addActionListener(listener);
+
         vista.btnAddKitEducativo.addActionListener(listener);
         vista.btnModKitEducativo.addActionListener(listener);
         vista.btnDelKitEducativo.addActionListener(listener);
@@ -73,22 +76,22 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     if (modelo.getCliente() == null) {
                         modelo.conectar();
                         vista.itemConectar.setText("Desconectar");
-                        vista.setTitle("Bar Manolo - <CONECTADO>");
+                        vista.setTitle("<CONECTADO>");
                         setBotonesActivados(true);
                         listarProductos();
-                        listarEmpleados();
-                        listarDepartamentos();
+                        listarEmpresas();
+                        listarKits();
                     } else {
                         modelo.desconectar();
                         vista.itemConectar.setText("Conectar");
-                        vista.setTitle("Bar Manolo - <SIN CONEXION>");
+                        vista.setTitle("<SIN CONEXION>");
                         setBotonesActivados(false);
                         vista.dlmProductos.clear();
                         vista.dlmEmpleados.clear();
                         vista.dlmDepartamentos.clear();
                         limpiarCamposProducto();
-                        limpiarCamposEmpleado();
-                        limpiarCamposDepartamento();
+                        limpiarCamposEmpresas();
+                        limpiarCamposKits();
                     }
                 } catch (Exception ex) {
                     Util.mostrarMensajeError("Imposible establecer conexión con el servidor.");
@@ -101,10 +104,11 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 break;
 
             case "addProducto":
+
                 if (comprobarCamposProducto()) {
-                    modelo.guardarObjeto(new Producto(vista.txtMarcaProducto.getText(),
-                            Integer.parseInt(vista.txtDescripcionProducto.getText()),
-                            Float.parseFloat(vista.txtModeloProducto.getText())));
+                    Producto p = new Producto();
+                    rellenarProducto(p);
+                    modelo.guardarObjeto(p);
                     limpiarCamposProducto();
                 } else {
                     Util.mostrarMensajeError("No ha sido posible insertar el producto en la base de datos.\n" +
@@ -117,9 +121,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 if (vista.listProductos.getSelectedValue() != null) {
                     if (comprobarCamposProducto()) {
                         Producto producto = vista.listProductos.getSelectedValue();
-                        producto.setNombre(vista.txtMarcaProducto.getText());
-                        producto.setGrados(Integer.parseInt(vista.txtDescripcionProducto.getText()));
-                        producto.setPrecio(Float.parseFloat(vista.txtModeloProducto.getText()));
+                        rellenarProducto(producto);
                         modelo.modificarObjeto(producto);
                         limpiarCamposProducto();
                     } else {
@@ -143,32 +145,32 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 break;
 
             case "addEmpleado":
-                if (comprobarCamposEmpleado()) {
-                    modelo.guardarObjeto(new Empresa(vista.txtNombreEmpresa.getText(),
-                            vista.txtApellidosEmpleado.getText(),
-                            vista.dateFechaDeCreacionEmpresa.getDate()));
-                    limpiarCamposEmpleado();
+                if (comprobarCamposEmpresas()) {
+//                    modelo.guardarObjeto(new Empresa(vista.txtNombreEmpresa.getText(),
+//                            vista.txtApellidosEmpleado.getText(),
+//                            vista.dateFechaDeCreacionEmpresa.getDate()));
+                    limpiarCamposEmpresas();
                 } else {
                     Util.mostrarMensajeError("No ha sido posible insertar el empleado en la base de datos.\n" +
                             "Compruebe que los campos contengan el tipo de dato requerido.");
                 }
-                listarEmpleados();
+                listarEmpresas();
                 break;
 
             case "modEmpleado":
                 if (vista.listEmpresa.getSelectedValue() != null) {
-                    if (comprobarCamposEmpleado()) {
+                    if (comprobarCamposEmpresas()) {
                         Empresa empresa = vista.listEmpresa.getSelectedValue();
                         empresa.setNombre(vista.txtNombreEmpresa.getText());
-                        empresa.setApellidos(vista.txtApellidosEmpleado.getText());
-                        empresa.setNacimiento(vista.dateFechaDeCreacionEmpresa.getDate());
+//                        empresa.setApellidos(vista.txtApellidosEmpleado.getText());
+//                        empresa.setNacimiento(vista.dateFechaDeCreacionEmpresa.getDate());
                         modelo.modificarObjeto(empresa);
-                        limpiarCamposEmpleado();
+                        limpiarCamposEmpresas();
                     } else {
                         Util.mostrarMensajeError("No ha sido posible modificar el empleado en la base de datos.\n" +
                                 "Compruebe que los campos contengan el tipo de dato requerido.");
                     }
-                    listarEmpleados();
+                    listarEmpresas();
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
@@ -177,36 +179,36 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             case "delEmpleado":
                 if (vista.listEmpresa.getSelectedValue() != null) {
                     modelo.eliminarObjeto(vista.listEmpresa.getSelectedValue());
-                    listarEmpleados();
-                    limpiarCamposEmpleado();
+                    listarEmpresas();
+                    limpiarCamposEmpresas();
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
                 break;
 
-            case "addDepartamento":
-                if (comprobarCamposDepartamento()) {
-                    modelo.guardarObjeto(new Kit_Educativo(vista.txtNombreKit.getText()));
-                    limpiarCamposDepartamento();
+            case "addKits":
+                if (comprobarCamposKits()) {
+//                    modelo.guardarObjeto(new Kit_Educativo(vista.txtNombreKit.getText()));
+                    limpiarCamposKits();
                 } else {
                     Util.mostrarMensajeError("No ha sido posible insertar el departamento en la base de datos.\n" +
                             "Compruebe que los campos contengan el tipo de dato requerido.");
                 }
-                listarDepartamentos();
+                listarKits();
                 break;
 
             case "modDepartamento":
                 if (vista.listKitEducativo.getSelectedValue() != null) {
-                    if (comprobarCamposDepartamento()) {
+                    if (comprobarCamposKits()) {
                         Kit_Educativo kitEducativo = vista.listKitEducativo.getSelectedValue();
-                        kitEducativo.setDepartamento(vista.txtNombreKit.getText());
+                        kitEducativo.setNombre(vista.txtNombreKit.getText());
                         modelo.modificarObjeto(kitEducativo);
-                        limpiarCamposDepartamento();
+                        limpiarCamposKits();
                     } else {
                         Util.mostrarMensajeError("No ha sido posible modificar el departamento en la base de datos.\n" +
                                 "Compruebe que los campos contengan el tipo de dato requerido.");
                     }
-                    listarDepartamentos();
+                    listarKits();
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
@@ -215,8 +217,8 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             case "delDepartamento":
                 if (vista.listKitEducativo.getSelectedValue() != null) {
                     modelo.eliminarObjeto(vista.listKitEducativo.getSelectedValue());
-                    listarDepartamentos();
-                    limpiarCamposDepartamento();
+                    listarKits();
+                    limpiarCamposKits();
                     break;
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
@@ -224,20 +226,38 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         }
     }
 
+    private void rellenarProducto(Producto p) {
+        p.setNombre(vista.txtNombreProducto.getText());
+        p.setDescripcion(vista.txtDescripcionProducto.getText());
+        p.setModelo(vista.txtModeloProducto.getText());
+        p.setMarca(vista.txtMarcaProducto.getText());
+        if (vista.usadoCheckBox.isSelected())
+        {
+            p.setEstado(EstadoProducto.USADO);
+        }
+        else if (vista.nuevoCheckBox.isSelected())
+        {
+            p.setEstado(EstadoProducto.NUEVO);
+        }
+        else{
+            p.setEstado(EstadoProducto.REACONDICIONADO);
+        }
+    }
+
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vista.txtBuscarProducto) {
-            listarProductosBusqueda(modelo.getProductos(vista.txtBuscarProducto.getText()));
+//            listarProductosBusqueda(modelo.getProductos(vista.txtBuscarProducto.getText()));
             if (vista.txtBuscarProducto.getText().isEmpty()) {
                 vista.dlmProductosBusqueda.clear();
             }
         } else if (e.getSource() == vista.txtBuscarEmpresa) {
-            listarEmpleadosBusqueda(modelo.getEmpleados(vista.txtBuscarEmpresa.getText()));
+//            listarEmpresasBusqueda(modelo.getEmpleados(vista.txtBuscarEmpresa.getText()));
             if (vista.txtBuscarEmpresa.getText().isEmpty()) {
                 vista.dlmEmpleadosBusqueda.clear();
             }
         } else if (e.getSource() == vista.txtBuscarKitEducativo) {
-            listarDepartamentosBusqueda(modelo.getDepartamentos(vista.txtBuscarKitEducativo.getText()));
+//            listarKitsBusqueda(modelo.getDepartamentos(vista.txtBuscarKitEducativo.getText()));
             if (vista.txtBuscarKitEducativo.getText().isEmpty()) {
                 vista.dlmDepartamentosBusqueda.clear();
             }
@@ -249,58 +269,71 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         if (e.getSource() == vista.listProductos) {
             if (vista.listProductos.getSelectedValue() != null) {
                 Producto producto = vista.listProductos.getSelectedValue();
-                vista.txtMarcaProducto.setText(producto.getNombre());
-                vista.txtDescripcionProducto.setText(String.valueOf(producto.getGrados()));
-                vista.txtModeloProducto.setText(String.valueOf(producto.getPrecio()));
+                vista.txtNombreProducto.setText(producto.getNombre());
+                vista.txtMarcaProducto.setText(producto.getMarca());
+                vista.txtDescripcionProducto.setText(producto.getDescripcion());
+                vista.txtModeloProducto.setText(producto.getModelo());
+                if (producto.getEstado()==EstadoProducto.USADO)
+                {
+                    vista.usadoCheckBox.setSelected(true);
+                }
+                else if (producto.getEstado()==EstadoProducto.NUEVO)
+                {
+                    vista.nuevoCheckBox.setSelected(true);
+                }
+                else{
+                    vista.reacondicionadoCheckBox.setSelected(true);
+                }
             }
         } else if (e.getSource() == vista.listEmpresa) {
             if (vista.listEmpresa.getSelectedValue() != null) {
                 Empresa empresa = vista.listEmpresa.getSelectedValue();
                 vista.txtNombreEmpresa.setText(empresa.getNombre());
-                vista.txtApellidosEmpleado.setText(empresa.getApellidos());
-                vista.dateFechaDeCreacionEmpresa.setDate(empresa.getNacimiento());
+//                vista.txtApellidosEmpleado.setText(empresa.getApellidos());
+//                vista.dateFechaDeCreacionEmpresa.setDate(empresa.getNacimiento());
             }
         } else if (e.getSource() == vista.listKitEducativo) {
             if (vista.listKitEducativo.getSelectedValue() != null) {
                 Kit_Educativo kitEducativo = vista.listKitEducativo.getSelectedValue();
-                vista.txtNombreKit.setText(kitEducativo.getDepartamento());
+//                vista.txtNombreKit.setText(kitEducativo.getDepartamento());
             }
         }
     }
 
     private boolean comprobarCamposProducto() {
-        return !vista.txtMarcaProducto.getText().isEmpty() &&
+        return !vista.txtNombreProducto.getText().isEmpty() &&
+                !vista.txtMarcaProducto.getText().isEmpty() &&
                 !vista.txtDescripcionProducto.getText().isEmpty() &&
-                !vista.txtModeloProducto.getText().isEmpty() &&
-                comprobarInt(vista.txtDescripcionProducto.getText()) &&
-                comprobarFloat(vista.txtModeloProducto.getText());
+                !vista.txtModeloProducto.getText().isEmpty();
     }
 
-    private boolean comprobarCamposEmpleado() {
+    private boolean comprobarCamposEmpresas() {
         return !vista.txtNombreEmpresa.getText().isEmpty() &&
                 !vista.txtApellidosEmpleado.getText().isEmpty() &&
                 !vista.dateFechaDeCreacionEmpresa.getText().isEmpty();
     }
 
-    private boolean comprobarCamposDepartamento() {
+    private boolean comprobarCamposKits() {
         return !vista.txtNombreKit.getText().isEmpty();
     }
 
     private void limpiarCamposProducto() {
+        vista.txtNombreProducto.setText("");
         vista.txtMarcaProducto.setText("");
         vista.txtDescripcionProducto.setText("");
         vista.txtModeloProducto.setText("");
         vista.txtBuscarProducto.setText("");
+        vista.usadoCheckBox.setSelected(true);
     }
 
-    private void limpiarCamposEmpleado() {
+    private void limpiarCamposEmpresas() {
         vista.txtNombreEmpresa.setText("");
         vista.txtApellidosEmpleado.setText("");
         vista.dateFechaDeCreacionEmpresa.clear();
         vista.txtBuscarEmpresa.setText("");
     }
 
-    private void limpiarCamposDepartamento() {
+    private void limpiarCamposKits() {
         vista.txtNombreKit.setText("");
         vista.txtBuscarKitEducativo.setText("");
     }
@@ -330,16 +363,16 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         }
     }
 
-    private void listarEmpleados() {
+    private void listarEmpresas() {
         vista.dlmEmpleados.clear();
-        for (Empresa empresa : modelo.getEmpleados()) {
+        for (Empresa empresa : modelo.getEmpresas()) {
             vista.dlmEmpleados.addElement(empresa);
         }
     }
 
-    private void listarDepartamentos() {
+    private void listarKits() {
         vista.dlmDepartamentos.clear();
-        for (Kit_Educativo kitEducativo : modelo.getDepartamentos()) {
+        for (Kit_Educativo kitEducativo : modelo.getKits()) {
             vista.dlmDepartamentos.addElement(kitEducativo);
         }
     }
@@ -351,14 +384,14 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         }
     }
 
-    private void listarEmpleadosBusqueda(ArrayList<Empresa> lista) {
+    private void listarEmpresasBusqueda(ArrayList<Empresa> lista) {
         vista.dlmEmpleadosBusqueda.clear();
         for (Empresa empresa : lista) {
             vista.dlmEmpleadosBusqueda.addElement(empresa);
         }
     }
 
-    private void listarDepartamentosBusqueda(ArrayList<Kit_Educativo> lista) {
+    private void listarKitsBusqueda(ArrayList<Kit_Educativo> lista) {
         vista.dlmDepartamentosBusqueda.clear();
         for (Kit_Educativo kitEducativo : lista) {
             vista.dlmDepartamentosBusqueda.addElement(kitEducativo);
