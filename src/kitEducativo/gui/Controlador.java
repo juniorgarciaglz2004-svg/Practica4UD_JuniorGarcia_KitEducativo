@@ -144,7 +144,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 }
                 break;
 
-            case "addEmpresas":
+            case "addEmpresa":
                 if (comprobarCamposEmpresas()) {
                     Empresa em = new Empresa();
                     rellenarEmpresa(em);
@@ -157,7 +157,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 listarEmpresas();
                 break;
 
-            case "modEmpresas":
+            case "modEmpresa":
                 if (vista.listEmpresa.getSelectedValue() != null) {
                     if (comprobarCamposEmpresas()) {
                         Empresa empresa = vista.listEmpresa.getSelectedValue();
@@ -174,7 +174,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 }
                 break;
 
-            case "delEmpresas":
+            case "delEmpresa":
                 if (vista.listEmpresa.getSelectedValue() != null) {
                     modelo.eliminarObjeto(vista.listEmpresa.getSelectedValue());
                     listarEmpresas();
@@ -326,8 +326,11 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             if (vista.listEmpresa.getSelectedValue() != null) {
                 Empresa empresa = vista.listEmpresa.getSelectedValue();
                 vista.txtNombreEmpresa.setText(empresa.getNombre());
-//                vista.txtApellidosEmpleado.setText(empresa.getApellidos());
-//                vista.dateFechaDeCreacionEmpresa.setDate(empresa.getNacimiento());
+                vista.dateFechaDeCreacionEmpresa.setDate(empresa.getFechaCreacion());
+                vista.txtDescripcionEmpresa.setText(empresa.getDescripcion());
+                vista.txtUbicacionEmpresa.setText(empresa.getUbicacion());
+                vista.sliderValorcaion.setValue(empresa.getValoracion());
+                
             }
         } else if (e.getSource() == vista.listKitEducativo) {
             if (vista.listKitEducativo.getSelectedValue() != null) {
