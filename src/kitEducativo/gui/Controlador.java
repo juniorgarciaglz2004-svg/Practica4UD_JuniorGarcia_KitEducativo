@@ -138,10 +138,16 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
             case "delProducto":
                 if (vista.listProductos.getSelectedValue() != null) {
+                    if (modelo.productoEnUso(vista.listProductos.getSelectedValue().getId()))
+                    {
+                        Util.mostrarMensajeError("No se puede eliminar el producto porque se esta usando");
+                    }
+                    else{
                     modelo.eliminarObjeto(vista.listProductos.getSelectedValue());
                     listarProductos();
                     limpiarCamposProducto();
                     resfrescarProductos();
+                    }
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
@@ -181,10 +187,16 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
             case "delEmpresa":
                 if (vista.listEmpresa.getSelectedValue() != null) {
+                    if (modelo.empresaEnUso(vista.listEmpresa.getSelectedValue().getId()))
+                    {
+                        Util.mostrarMensajeError("No se puede eliminar la empresa porque se esta usando");
+                    }
+                    else{
                     modelo.eliminarObjeto(vista.listEmpresa.getSelectedValue());
                     listarEmpresas();
                     limpiarCamposEmpresas();
                     resfrecarEmpresa();
+                    }
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
@@ -320,7 +332,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vista.txtBuscarProducto) {
-          listarProductosBusqueda(modelo.getProductos(vista.txtBuscarProducto.getText()));
+            listarProductosBusqueda(modelo.getProductos(vista.txtBuscarProducto.getText()));
             if (vista.txtBuscarProducto.getText().isEmpty()) {
                 vista.dlmProductosBusqueda.clear();
             }
@@ -385,21 +397,21 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
         ComboBoxModel<Empresa> model = vista.comboBoxKitEmpresa.getModel();
 
-        for(int i = 0; i < model.getSize(); i++) {
+        for (int i = 0; i < model.getSize(); i++) {
             if (model.getElementAt(i).getId().equals(empresasKit)) {
                 vista.comboBoxKitEmpresa.setSelectedIndex(i);
                 return;
             }
         }
 
-       vista.comboBoxKitEmpresa.setSelectedIndex(-1);
+        vista.comboBoxKitEmpresa.setSelectedIndex(-1);
     }
 
     private void ponKitProducto(ObjectId productosKit) {
 
         ComboBoxModel<Producto> model = vista.comboKitProducto.getModel();
 
-        for(int i = 0; i < model.getSize(); i++) {
+        for (int i = 0; i < model.getSize(); i++) {
             if (model.getElementAt(i).getId().equals(productosKit)) {
                 vista.comboKitProducto.setSelectedIndex(i);
                 return;
@@ -429,8 +441,8 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 !vista.txtDescripcionKit.getText().isEmpty() &&
                 !vista.txtCantidadKit.getText().isEmpty() &&
 
-                vista.comboBoxKitEmpresa.getSelectedIndex()>=0 &&
-                vista.comboKitProducto.getSelectedIndex()>=0 &&
+                vista.comboBoxKitEmpresa.getSelectedIndex() >= 0 &&
+                vista.comboKitProducto.getSelectedIndex() >= 0 &&
 
                 !vista.dateFechaCreacionKit.getText().isEmpty() &&
                 !vista.dateFechaActualizacionKit.getText().isEmpty() &&
@@ -462,23 +474,6 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         vista.txtBuscarKitEducativo.setText("");
     }
 
-    private boolean comprobarInt(String txt) {
-        try {
-            Integer.parseInt(txt);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    private boolean comprobarFloat(String txt) {
-        try {
-            Float.parseFloat(txt);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
 
     private void listarProductos() {
         vista.dlmProductos.clear();

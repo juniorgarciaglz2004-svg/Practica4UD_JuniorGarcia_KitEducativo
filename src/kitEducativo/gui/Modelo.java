@@ -1,5 +1,6 @@
 package kitEducativo.gui;
 
+import com.mongodb.client.model.Filters;
 import kitEducativo.datos.Empresa;
 import kitEducativo.datos.EstadoProducto;
 import kitEducativo.datos.Kit_Educativo;
@@ -8,6 +9,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -243,5 +245,15 @@ public class Modelo {
             return null;
         }
         return dc;
+    }
+
+    public boolean productoEnUso(ObjectId id) {
+
+        return kits.find(Filters.eq("productoKit", id)).first()!=null;
+        }
+
+    public boolean empresaEnUso(ObjectId id) {
+
+        return kits.find(Filters.eq("empresasKit", id)).first()!=null;
     }
 }
