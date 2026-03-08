@@ -731,7 +731,7 @@
                   <paintTicks value="true"/>
                 </properties>
               </component>
-              <component id="9cef1" class="com.github.lgooddatepicker.components.DatePicker">
+              <component id="9cef1" class="com.github.lgooddatepicker.components.DatePicker" binding="dateFechaCreacionKit">
                 <constraints>
                   <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -780,7 +780,7 @@
                   <text value="Fecha De Actualizacion"/>
                 </properties>
               </component>
-              <component id="ce24c" class="com.github.lgooddatepicker.components.DatePicker">
+              <component id="ce24c" class="com.github.lgooddatepicker.components.DatePicker" binding="dateFechaActualizacionKit">
                 <constraints>
                   <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

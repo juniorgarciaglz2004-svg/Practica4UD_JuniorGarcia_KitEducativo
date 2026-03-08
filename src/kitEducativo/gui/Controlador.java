@@ -34,12 +34,13 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             listarProductos();
             listarEmpresas();
             listarKits();
+            refrescarTodo();
         } catch (Exception ex) {
             Util.mostrarMensajeError("Imposible establecer conexión con el servidor.");
         }
     }
 
-    private void addActionListeners(ActionListener listener){
+    private void addActionListeners(ActionListener listener) {
         vista.btnAddProducto.addActionListener(listener);
         vista.btnModProducto.addActionListener(listener);
         vista.btnDelProducto.addActionListener(listener);
@@ -56,13 +57,13 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         vista.itemSalir.addActionListener(listener);
     }
 
-    private void addListSelectionListeners(ListSelectionListener listener){
+    private void addListSelectionListeners(ListSelectionListener listener) {
         vista.listProductos.addListSelectionListener(listener);
         vista.listEmpresa.addListSelectionListener(listener);
         vista.listKitEducativo.addListSelectionListener(listener);
     }
 
-    private void addKeyListeners(KeyListener listener){
+    private void addKeyListeners(KeyListener listener) {
         vista.txtBuscarProducto.addKeyListener(listener);
         vista.txtBuscarEmpresa.addKeyListener(listener);
         vista.txtBuscarKitEducativo.addKeyListener(listener);
@@ -87,8 +88,8 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                         vista.setTitle("Kit Educativo <SIN CONEXION>");
                         setBotonesActivados(false);
                         vista.dlmProductos.clear();
-                        vista.dlmEmpleados.clear();
-                        vista.dlmDepartamentos.clear();
+                        vista.dlmEmpresas.clear();
+                        vista.dlmKits.clear();
                         limpiarCamposProducto();
                         limpiarCamposEmpresas();
                         limpiarCamposKits();
@@ -110,6 +111,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     rellenarProducto(p);
                     modelo.guardarObjeto(p);
                     limpiarCamposProducto();
+                    resfrescarProductos();
                 } else {
                     Util.mostrarMensajeError("No ha sido posible insertar datos de producto en la base de datos.\n" +
                             "Compruebe si faltan campos o se ha introducido un dato incorrecto.");
@@ -124,6 +126,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                         rellenarProducto(producto);
                         modelo.modificarObjeto(producto);
                         limpiarCamposProducto();
+                        resfrescarProductos();
                     } else {
                         Util.mostrarMensajeError("No ha sido posible modificar el producto en la base de datos.\n" +
                                 "Compruebe si faltan campos o se ha introducido un dato incorrecto.");
@@ -139,6 +142,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     modelo.eliminarObjeto(vista.listProductos.getSelectedValue());
                     listarProductos();
                     limpiarCamposProducto();
+                    resfrescarProductos();
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
@@ -150,6 +154,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     rellenarEmpresa(em);
                     modelo.guardarObjeto(em);
                     limpiarCamposEmpresas();
+                    resfrecarEmpresa();
                 } else {
                     Util.mostrarMensajeError("No ha sido posible insertar la empresa en la base de datos.\n" +
                             "Compruebe si faltan campos o se ha introducido un dato incorrecto.");
@@ -164,6 +169,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                         rellenarEmpresa(empresa);
                         modelo.modificarObjeto(empresa);
                         limpiarCamposEmpresas();
+                        resfrecarEmpresa();
                     } else {
                         Util.mostrarMensajeError("No ha sido posible modificar la empresa en la base de datos.\n" +
                                 "Compruebe si faltan campos o se ha introducido un dato incorrecto.");
@@ -179,6 +185,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     modelo.eliminarObjeto(vista.listEmpresa.getSelectedValue());
                     listarEmpresas();
                     limpiarCamposEmpresas();
+                    resfrecarEmpresa();
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
                 }
@@ -186,10 +193,13 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
             case "addKits":
                 if (comprobarCamposKits()) {
-//                    modelo.guardarObjeto(new Kit_Educativo(vista.txtNombreKit.getText()));
+                    Kit_Educativo k = new Kit_Educativo();
+                    rellenarKit(k);
+                    modelo.guardarObjeto(k);
                     limpiarCamposKits();
+                    resfrecarKits();
                 } else {
-                    Util.mostrarMensajeError("No ha sido posible insertar el departamento en la base de datos.\n" +
+                    Util.mostrarMensajeError("No ha sido posible insertar el kit en la base de datos.\n" +
                             "Compruebe si faltan campos o se ha introducido un dato incorrecto.");
                 }
                 listarKits();
@@ -199,12 +209,13 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 if (vista.listKitEducativo.getSelectedValue() != null) {
                     if (comprobarCamposKits()) {
                         Kit_Educativo kitEducativo = vista.listKitEducativo.getSelectedValue();
-                        kitEducativo.setNombre(vista.txtNombreKit.getText());
+                        rellenarKit(kitEducativo);
                         modelo.modificarObjeto(kitEducativo);
                         limpiarCamposKits();
+                        resfrecarKits();
                     } else {
-                        Util.mostrarMensajeError("No ha sido posible modificar el departamento en la base de datos.\n" +
-                                "Compruebe que los campos contengan el tipo de dato requerido.");
+                        Util.mostrarMensajeError("No ha sido posible modificar el kit en la base de datos.\n" +
+                                "Compruebe si faltan campos o se ha introducido un dato incorrecto.");
                     }
                     listarKits();
                 } else {
@@ -217,6 +228,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     modelo.eliminarObjeto(vista.listKitEducativo.getSelectedValue());
                     listarKits();
                     limpiarCamposKits();
+                    resfrecarKits();
                     break;
                 } else {
                     Util.mostrarMensajeError("No hay ningún elemento seleccionado.");
@@ -229,22 +241,17 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         p.setDescripcion(vista.txtDescripcionProducto.getText());
         p.setModelo(vista.txtModeloProducto.getText());
         p.setMarca(vista.txtMarcaProducto.getText());
-        if (vista.usadoCheckBox.isSelected())
-        {
+        if (vista.usadoCheckBox.isSelected()) {
             p.setEstado(EstadoProducto.USADO);
-        }
-        else if (vista.nuevoCheckBox.isSelected())
-        {
+        } else if (vista.nuevoCheckBox.isSelected()) {
             p.setEstado(EstadoProducto.NUEVO);
-        }
-        else{
+        } else {
             p.setEstado(EstadoProducto.REACONDICIONADO);
         }
     }
 
 
-    private void rellenarEmpresa(Empresa e)
-    {
+    private void rellenarEmpresa(Empresa e) {
         e.setNombre(vista.txtNombreEmpresa.getText());
         e.setDescripcion(vista.txtDescripcionEmpresa.getText());
         e.setFechaCreacion(vista.dateFechaDeCreacionEmpresa.getDate());
@@ -253,33 +260,64 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
     }
 
-    private void rellenarKit(Kit_Educativo k)
-    {
-//        private String nombre;
-//        private String descripcion;
-//
-//        private int cantidad;
-//        private ObjectId empresasKit;
-//        private ObjectId productoKit;
-//
-//        private LocalDate fechaCreacion;
-//        private LocalDate fechaActualizacion;
-//
-//        private double precio;
-//        private int valoracion;
-
+    private void rellenarKit(Kit_Educativo k) {
 
         k.setNombre(vista.txtNombreKit.getText());
         k.setDescripcion(vista.txtDescripcionKit.getText());
         k.setCantidad(Integer.parseInt(vista.txtCantidadKit.getText()));
-        //K.setFechaCreacion(vista.dateFechaDeCreacionEmpresa.toString());
-        //K.setFechaCreacion(vista.dateFechaDeCreacionEmpresa.toString());
-        //k.setPrecio();
+
+        k.setEmpresasKit(((Empresa) vista.comboBoxKitEmpresa.getSelectedItem()).getId());
+        k.setProductoKit(((Producto) vista.comboKitProducto.getSelectedItem()).getId());
+
+        k.setFechaCreacion(vista.dateFechaCreacionKit.getDate());
+        k.setFechaActualizacion(vista.dateFechaActualizacionKit.getDate());
+
+        k.setPrecio(Double.parseDouble(vista.txtPrecioKit.getText()));
         k.setValoracion(vista.sliderKitEducativo.getValue());
 
 
     }
 
+
+    private void refrescarTodo() {
+        resfrescarProductos();
+        resfrecarEmpresa();
+        resfrecarKits();
+    }
+
+    void resfrescarProductos() {
+
+
+        vista.dlmProductos.clear();
+        vista.comboKitProducto.removeAllItems();
+
+        for (Producto p : modelo.getProductos()) {
+            System.out.println(p);
+            vista.dlmProductos.addElement(p);
+            vista.comboKitProducto.addItem(p);
+        }
+
+    }
+
+    void resfrecarEmpresa() {
+        vista.dlmEmpresas.clear();
+        vista.comboBoxKitEmpresa.removeAllItems();
+
+        for (Empresa e : modelo.getEmpresas()) {
+            vista.dlmEmpresas.addElement(e);
+            vista.comboBoxKitEmpresa.addItem(e);
+        }
+
+    }
+
+    void resfrecarKits() {
+        vista.dlmKits.clear();
+
+        for (Kit_Educativo e : modelo.getKits()) {
+            vista.dlmKits.addElement(e);
+        }
+
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -291,12 +329,12 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         } else if (e.getSource() == vista.txtBuscarEmpresa) {
 //            listarEmpresasBusqueda(modelo.getEmpleados(vista.txtBuscarEmpresa.getText()));
             if (vista.txtBuscarEmpresa.getText().isEmpty()) {
-                vista.dlmEmpleadosBusqueda.clear();
+                vista.dlmEmpresasBusqueda.clear();
             }
         } else if (e.getSource() == vista.txtBuscarKitEducativo) {
 //            listarKitsBusqueda(modelo.getDepartamentos(vista.txtBuscarKitEducativo.getText()));
             if (vista.txtBuscarKitEducativo.getText().isEmpty()) {
-                vista.dlmDepartamentosBusqueda.clear();
+                vista.dlmKitsBusqueda.clear();
             }
         }
     }
@@ -310,15 +348,11 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 vista.txtMarcaProducto.setText(producto.getMarca());
                 vista.txtDescripcionProducto.setText(producto.getDescripcion());
                 vista.txtModeloProducto.setText(producto.getModelo());
-                if (producto.getEstado()==EstadoProducto.USADO)
-                {
+                if (producto.getEstado() == EstadoProducto.USADO) {
                     vista.usadoCheckBox.setSelected(true);
-                }
-                else if (producto.getEstado()==EstadoProducto.NUEVO)
-                {
+                } else if (producto.getEstado() == EstadoProducto.NUEVO) {
                     vista.nuevoCheckBox.setSelected(true);
-                }
-                else{
+                } else {
                     vista.reacondicionadoCheckBox.setSelected(true);
                 }
             }
@@ -334,8 +368,17 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             }
         } else if (e.getSource() == vista.listKitEducativo) {
             if (vista.listKitEducativo.getSelectedValue() != null) {
-                Kit_Educativo kitEducativo = vista.listKitEducativo.getSelectedValue();
-//                vista.txtNombreKit.setText(kitEducativo.getDepartamento());
+                Kit_Educativo k = vista.listKitEducativo.getSelectedValue();
+                vista.txtNombreKit.setText(k.getNombre());
+                vista.txtDescripcionKit.setText(k.getDescripcion());
+                vista.txtCantidadKit.setText(String.valueOf(k.getCantidad()));
+//                vista.comboBoxKitEmpresa.setSelectedIndex();
+//                vista.comboKitProducto.setSelectedIndex();
+                vista.dateFechaCreacionKit.setDate(k.getFechaCreacion());
+                vista.dateFechaActualizacionKit.setDate(k.getFechaActualizacion());
+                vista.txtPrecioKit.setText(String.valueOf(k.getPrecio()));
+                vista.sliderKitEducativo.setValue(k.getValoracion());
+
             }
         }
     }
@@ -351,12 +394,22 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         return !vista.txtNombreEmpresa.getText().isEmpty() &&
                 !vista.txtDescripcionEmpresa.getText().isEmpty() &&
                 !vista.txtUbicacionEmpresa.getText().isEmpty() &&
-                //!vista.sliderValorcaion.getValue().get &&
+                vista.sliderValorcaion.getValue() > 0 &&
                 !vista.dateFechaDeCreacionEmpresa.getText().isEmpty();
     }
 
     private boolean comprobarCamposKits() {
-        return !vista.txtNombreKit.getText().isEmpty();
+        return !vista.txtNombreKit.getText().isEmpty() &&
+                !vista.txtDescripcionKit.getText().isEmpty() &&
+                !vista.txtCantidadKit.getText().isEmpty() &&
+
+                vista.comboBoxKitEmpresa.getSelectedIndex()>=0 &&
+                vista.comboKitProducto.getSelectedIndex()>=0 &&
+
+                !vista.dateFechaCreacionKit.getText().isEmpty() &&
+                !vista.dateFechaActualizacionKit.getText().isEmpty() &&
+                !vista.txtPrecioKit.getText().isEmpty() &&
+                vista.sliderKitEducativo.getValue() > 0;
     }
 
     private void limpiarCamposProducto() {
@@ -409,16 +462,16 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarEmpresas() {
-        vista.dlmEmpleados.clear();
+        vista.dlmEmpresas.clear();
         for (Empresa empresa : modelo.getEmpresas()) {
-            vista.dlmEmpleados.addElement(empresa);
+            vista.dlmEmpresas.addElement(empresa);
         }
     }
 
     private void listarKits() {
-        vista.dlmDepartamentos.clear();
+        vista.dlmKits.clear();
         for (Kit_Educativo kitEducativo : modelo.getKits()) {
-            vista.dlmDepartamentos.addElement(kitEducativo);
+            vista.dlmKits.addElement(kitEducativo);
         }
     }
 
@@ -430,16 +483,16 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarEmpresasBusqueda(ArrayList<Empresa> lista) {
-        vista.dlmEmpleadosBusqueda.clear();
+        vista.dlmEmpresasBusqueda.clear();
         for (Empresa empresa : lista) {
-            vista.dlmEmpleadosBusqueda.addElement(empresa);
+            vista.dlmEmpresasBusqueda.addElement(empresa);
         }
     }
 
     private void listarKitsBusqueda(ArrayList<Kit_Educativo> lista) {
-        vista.dlmDepartamentosBusqueda.clear();
+        vista.dlmKitsBusqueda.clear();
         for (Kit_Educativo kitEducativo : lista) {
-            vista.dlmDepartamentosBusqueda.addElement(kitEducativo);
+            vista.dlmKitsBusqueda.addElement(kitEducativo);
         }
     }
 
@@ -457,7 +510,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
     // Métodos innecesarios
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
+
     @Override
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+    }
 }

@@ -62,14 +62,16 @@ public class Vista extends JFrame {
      JTextField txtUbicacionEmpresa;
      JSlider sliderValorcaion;
      JComboBox comboKitProducto;
+     DatePicker dateFechaCreacionKit;
+     DatePicker dateFechaActualizacionKit;
 
 
     DefaultListModel<Producto> dlmProductos;
-    DefaultListModel<Empresa> dlmEmpleados;
-    DefaultListModel<Kit_Educativo> dlmDepartamentos;
+    DefaultListModel<Empresa> dlmEmpresas;
+    DefaultListModel<Kit_Educativo> dlmKits;
     DefaultListModel<Producto> dlmProductosBusqueda;
-    DefaultListModel<Empresa> dlmEmpleadosBusqueda;
-    DefaultListModel<Kit_Educativo> dlmDepartamentosBusqueda;
+    DefaultListModel<Empresa> dlmEmpresasBusqueda;
+    DefaultListModel<Kit_Educativo> dlmKitsBusqueda;
 
     // Menu
     JMenuItem itemConectar;
@@ -91,16 +93,16 @@ public class Vista extends JFrame {
      void inicializarModelos() {
         dlmProductos = new DefaultListModel<>();
         listProductos.setModel(dlmProductos);
-        dlmEmpleados = new DefaultListModel<>();
-        listEmpresa.setModel(dlmEmpleados);
-        dlmDepartamentos = new DefaultListModel<>();
-        listKitEducativo.setModel(dlmDepartamentos);
+        dlmEmpresas = new DefaultListModel<>();
+        listEmpresa.setModel(dlmEmpresas);
+        dlmKits = new DefaultListModel<>();
+        listKitEducativo.setModel(dlmKits);
         dlmProductosBusqueda = new DefaultListModel<>();
         listBusquedaProducto.setModel(dlmProductosBusqueda);
-        dlmEmpleadosBusqueda = new DefaultListModel<>();
-        listBusquedaEmpresa.setModel(dlmEmpleadosBusqueda);
-        dlmDepartamentosBusqueda = new DefaultListModel<>();
-        listBusquedaKitEducativo.setModel(dlmDepartamentosBusqueda);
+        dlmEmpresasBusqueda = new DefaultListModel<>();
+        listBusquedaEmpresa.setModel(dlmEmpresasBusqueda);
+        dlmKitsBusqueda = new DefaultListModel<>();
+        listBusquedaKitEducativo.setModel(dlmKitsBusqueda);
     }
 
      void inicializarMenu() {
