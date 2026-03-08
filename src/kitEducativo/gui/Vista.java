@@ -11,7 +11,7 @@ import java.awt.*;
 public class Vista extends JFrame {
      JPanel panelPrincipal;
 
-    // Productos
+
     JTextField txtMarcaProducto;
     JTextField txtDescripcionProducto;
     JTextField txtModeloProducto;
@@ -25,9 +25,8 @@ public class Vista extends JFrame {
     JTextField txtBuscarProducto;
     JList<Producto> listBusquedaProducto;
 
-    // Empleados
+
     JTextField txtNombreEmpresa;
-    JTextField txtApellidosEmpleado;
     DatePicker dateFechaDeCreacionEmpresa;
 
     JList<Empresa> listEmpresa;
@@ -39,7 +38,7 @@ public class Vista extends JFrame {
     JTextField txtBuscarEmpresa;
     JList<Empresa> listBusquedaEmpresa;
 
-    // Departamentos
+
     JTextField txtNombreKit;
 
     JList<Kit_Educativo> listKitEducativo;
@@ -64,7 +63,7 @@ public class Vista extends JFrame {
      JSlider sliderValorcaion;
      JComboBox comboKitProducto;
 
-    // Modelos
+
     DefaultListModel<Producto> dlmProductos;
     DefaultListModel<Empresa> dlmEmpleados;
     DefaultListModel<Kit_Educativo> dlmDepartamentos;
@@ -77,7 +76,7 @@ public class Vista extends JFrame {
     JMenuItem itemSalir;
 
     public Vista() {
-        setTitle("Bar Manolo - <SIN CONEXION>");
+        setTitle("Kit Educativos");
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(800, 650));

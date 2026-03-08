@@ -76,7 +76,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     if (modelo.getCliente() == null) {
                         modelo.conectar();
                         vista.itemConectar.setText("Desconectar");
-                        vista.setTitle("<CONECTADO>");
+                        vista.setTitle("Kit Educativo <CONECTADO>");
                         setBotonesActivados(true);
                         listarProductos();
                         listarEmpresas();
@@ -84,7 +84,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     } else {
                         modelo.desconectar();
                         vista.itemConectar.setText("Conectar");
-                        vista.setTitle("<SIN CONEXION>");
+                        vista.setTitle("Kit Educativo <SIN CONEXION>");
                         setBotonesActivados(false);
                         vista.dlmProductos.clear();
                         vista.dlmEmpleados.clear();

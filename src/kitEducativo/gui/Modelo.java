@@ -100,7 +100,7 @@ public class Modelo {
         return lista;
     }
 
-//    public ArrayList<Kit_Educativo> getDepartamentos(String comparador) {
+//    public ArrayList<Kit_Educativo> getKits(String comparador) {
 //        ArrayList<Kit_Educativo> lista = new ArrayList<>();
 //        Document query = new Document();
 //        List<Document> listaCriterios = new ArrayList<>();
