@@ -51,20 +51,20 @@ public class Modelo {
         return lista;
     }
 
-//    public ArrayList<Producto> getProductos(String comparador) {
-//        ArrayList<Producto> lista = new ArrayList<>();
-//        Document query = new Document();
-//        List<Document> listaCriterios = new ArrayList<>();
-//
-//        listaCriterios.add(new Document("nombre", new Document("$regex", "/*" + comparador + "/*")));
-//        query.append("$or", listaCriterios);
-//
-//        for (Document document : productos.find(query)) {
-//            lista.add(documentToProducto(document));
-//        }
-//
-//        return lista;
-//    }
+    public ArrayList<Producto> getProductos(String comparador) {
+        ArrayList<Producto> lista = new ArrayList<>();
+        Document query = new Document();
+        List<Document> listaCriterios = new ArrayList<>();
+
+        listaCriterios.add(new Document("nombre", new Document("$regex", "/*" + comparador + "/*")));
+        query.append("$or", listaCriterios);
+
+        for (Document document : productos.find(query)) {
+            lista.add(documentToProducto(document));
+        }
+
+        return lista;
+    }
 
     public ArrayList<Empresa> getEmpresas() {
         ArrayList<Empresa> lista = new ArrayList<>();
@@ -75,21 +75,21 @@ public class Modelo {
         return lista;
     }
 
-//    public ArrayList<Empresa> getEmpleados(String comparador) {
-//        ArrayList<Empresa> lista = new ArrayList<>();
-//        Document query = new Document();
-//        List<Document> listaCriterios = new ArrayList<>();
-//
-//        listaCriterios.add(new Document("nombre", new Document("$regex", "/*" + comparador + "/*")));
-//        listaCriterios.add(new Document("apellidos", new Document("$regex", "/*" + comparador + "/*")));
-//        query.append("$or", listaCriterios);
-//
-//        for (Document document : empleados.find(query)) {
-//            lista.add(documentToEmpresa(document));
-//        }
-//
-//        return lista;
-//    }
+    public ArrayList<Empresa> getEmpresas(String comparador) {
+        ArrayList<Empresa> lista = new ArrayList<>();
+        Document query = new Document();
+        List<Document> listaCriterios = new ArrayList<>();
+
+        listaCriterios.add(new Document("nombre", new Document("$regex", "/*" + comparador + "/*")));
+        listaCriterios.add(new Document("descripcion", new Document("$regex", "/*" + comparador + "/*")));
+        query.append("$or", listaCriterios);
+
+        for (Document document : empresas.find(query)) {
+            lista.add(documentToEmpresa(document));
+        }
+
+        return lista;
+    }
 
     public ArrayList<Kit_Educativo> getKits() {
         ArrayList<Kit_Educativo> lista = new ArrayList<>();
@@ -100,20 +100,21 @@ public class Modelo {
         return lista;
     }
 
-//    public ArrayList<Kit_Educativo> getKits(String comparador) {
-//        ArrayList<Kit_Educativo> lista = new ArrayList<>();
-//        Document query = new Document();
-//        List<Document> listaCriterios = new ArrayList<>();
-//
-//        listaCriterios.add(new Document("departamento", new Document("$regex", "/*" + comparador + "/*")));
-//        query.append("$or", listaCriterios);
-//
-//        for (Document document : departamentos.find(query)) {
-//            lista.add(documentToKit(document));
-//        }
-//
-//        return lista;
-//    }
+    public ArrayList<Kit_Educativo> getKits(String comparador) {
+        ArrayList<Kit_Educativo> lista = new ArrayList<>();
+        Document query = new Document();
+        List<Document> listaCriterios = new ArrayList<>();
+
+        listaCriterios.add(new Document("nombre", new Document("$regex", "/*" + comparador + "/*")));
+        listaCriterios.add(new Document("descripcion", new Document("$regex", "/*" + comparador + "/*")));
+        query.append("$or", listaCriterios);
+
+        for (Document document : kits.find(query)) {
+            lista.add(documentToKit(document));
+        }
+
+        return lista;
+    }
 
     public void guardarObjeto(Object obj) {
         if (obj instanceof Producto) {

@@ -320,17 +320,17 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vista.txtBuscarProducto) {
-//            listarProductosBusqueda(modelo.getProductos(vista.txtBuscarProducto.getText()));
+          listarProductosBusqueda(modelo.getProductos(vista.txtBuscarProducto.getText()));
             if (vista.txtBuscarProducto.getText().isEmpty()) {
                 vista.dlmProductosBusqueda.clear();
             }
         } else if (e.getSource() == vista.txtBuscarEmpresa) {
-//            listarEmpresasBusqueda(modelo.getEmpleados(vista.txtBuscarEmpresa.getText()));
+            listarEmpresasBusqueda(modelo.getEmpresas(vista.txtBuscarEmpresa.getText()));
             if (vista.txtBuscarEmpresa.getText().isEmpty()) {
                 vista.dlmEmpresasBusqueda.clear();
             }
         } else if (e.getSource() == vista.txtBuscarKitEducativo) {
-//            listarKitsBusqueda(modelo.getDepartamentos(vista.txtBuscarKitEducativo.getText()));
+            listarKitsBusqueda(modelo.getKits(vista.txtBuscarKitEducativo.getText()));
             if (vista.txtBuscarKitEducativo.getText().isEmpty()) {
                 vista.dlmKitsBusqueda.clear();
             }
