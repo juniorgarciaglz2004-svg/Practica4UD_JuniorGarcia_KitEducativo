@@ -31,9 +31,6 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             vista.itemConectar.setText("Desconectar");
             vista.setTitle("Kit Educativos");
             setBotonesActivados(true);
-            listarProductos();
-            listarEmpresas();
-            listarKits();
             refrescarTodo();
         } catch (Exception ex) {
             Util.mostrarMensajeError("Imposible establecer conexión con el servidor.");
@@ -292,7 +289,6 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         vista.comboKitProducto.removeAllItems();
 
         for (Producto p : modelo.getProductos()) {
-            System.out.println(p);
             vista.dlmProductos.addElement(p);
             vista.comboKitProducto.addItem(p);
         }
