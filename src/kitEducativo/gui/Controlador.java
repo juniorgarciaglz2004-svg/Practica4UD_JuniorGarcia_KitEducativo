@@ -5,7 +5,9 @@ import kitEducativo.datos.EstadoProducto;
 import kitEducativo.datos.Kit_Educativo;
 import kitEducativo.datos.Producto;
 import kitEducativo.util.Util;
+import org.bson.types.ObjectId;
 
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
@@ -368,8 +370,8 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 vista.txtNombreKit.setText(k.getNombre());
                 vista.txtDescripcionKit.setText(k.getDescripcion());
                 vista.txtCantidadKit.setText(String.valueOf(k.getCantidad()));
-//                vista.comboBoxKitEmpresa.setSelectedIndex();
-//                vista.comboKitProducto.setSelectedIndex();
+                ponKitEmpresa(k.getEmpresasKit());
+                ponKitProducto(k.getProductoKit());
                 vista.dateFechaCreacionKit.setDate(k.getFechaCreacion());
                 vista.dateFechaActualizacionKit.setDate(k.getFechaActualizacion());
                 vista.txtPrecioKit.setText(String.valueOf(k.getPrecio()));
@@ -377,6 +379,34 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
             }
         }
+    }
+
+    private void ponKitEmpresa(ObjectId empresasKit) {
+
+        ComboBoxModel<Empresa> model = vista.comboBoxKitEmpresa.getModel();
+
+        for(int i = 0; i < model.getSize(); i++) {
+            if (model.getElementAt(i).getId().equals(empresasKit)) {
+                vista.comboBoxKitEmpresa.setSelectedIndex(i);
+                return;
+            }
+        }
+
+       vista.comboBoxKitEmpresa.setSelectedIndex(-1);
+    }
+
+    private void ponKitProducto(ObjectId productosKit) {
+
+        ComboBoxModel<Producto> model = vista.comboKitProducto.getModel();
+
+        for(int i = 0; i < model.getSize(); i++) {
+            if (model.getElementAt(i).getId().equals(productosKit)) {
+                vista.comboKitProducto.setSelectedIndex(i);
+                return;
+            }
+        }
+
+        vista.comboKitProducto.setSelectedIndex(-1);
     }
 
     private boolean comprobarCamposProducto() {

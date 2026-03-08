@@ -81,7 +81,7 @@ public class Vista extends JFrame {
         setTitle("Kit Educativos");
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(800, 650));
+        setPreferredSize(new Dimension(900, 650));
         setResizable(false);
         pack();
         setVisible(true);

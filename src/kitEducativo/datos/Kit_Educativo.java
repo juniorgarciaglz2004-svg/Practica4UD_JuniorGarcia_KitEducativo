@@ -114,17 +114,6 @@ public class Kit_Educativo {
 
     @Override
     public String toString() {
-        return "Kit_Educativo{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", cantidad=" + cantidad +
-                ", empresasKit=" + empresasKit +
-                ", productoKit=" + productoKit +
-                ", fechaCreacion=" + fechaCreacion +
-                ", fechaActualizacion=" + fechaActualizacion +
-                ", precio=" + precio +
-                ", valoracion=" + valoracion +
-                '}';
+        return nombre + " (" + id + ") - " + descripcion;
     }
 }
