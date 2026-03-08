@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KitEducativo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KitEducativo_jar</output-path>
+    <root id="archive" name="KitEducativo.jar">
+      <element id="module-output" name="KitEducativo" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/LGoodDatePicker-10.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/mongo-java-driver-3.6.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -534,7 +534,7 @@
                   <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="delKits"/>
+                  <actionCommand value="delKit"/>
                   <background color="-1754827"/>
                   <enabled value="false"/>
                   <foreground color="-16777216"/>
@@ -546,7 +546,7 @@
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="modKits"/>
+                  <actionCommand value="modKit"/>
                   <background color="-1714678"/>
                   <enabled value="false"/>
                   <foreground color="-16777216"/>
@@ -605,7 +605,7 @@
                   <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="addKits"/>
+                  <actionCommand value="addKit"/>
                   <background color="-11279050"/>
                   <enabled value="false"/>
                   <foreground color="-16777216"/>

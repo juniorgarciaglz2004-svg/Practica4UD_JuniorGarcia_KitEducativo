@@ -202,7 +202,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 }
                 break;
 
-            case "addKits":
+            case "addKit":
                 if (comprobarCamposKits()) {
                     Kit_Educativo k = new Kit_Educativo();
                     rellenarKit(k);
