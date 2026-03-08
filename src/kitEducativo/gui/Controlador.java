@@ -432,7 +432,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         return !vista.txtNombreEmpresa.getText().isEmpty() &&
                 !vista.txtDescripcionEmpresa.getText().isEmpty() &&
                 !vista.txtUbicacionEmpresa.getText().isEmpty() &&
-                vista.sliderValorcaion.getValue() > 0 &&
+                vista.sliderValorcaion.getValue() >= 0 &&
                 !vista.dateFechaDeCreacionEmpresa.getText().isEmpty();
     }
 
@@ -447,7 +447,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 !vista.dateFechaCreacionKit.getText().isEmpty() &&
                 !vista.dateFechaActualizacionKit.getText().isEmpty() &&
                 !vista.txtPrecioKit.getText().isEmpty() &&
-                vista.sliderKitEducativo.getValue() > 0;
+                vista.sliderKitEducativo.getValue() >= 0;
     }
 
     private void limpiarCamposProducto() {
@@ -470,7 +470,17 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void limpiarCamposKits() {
+
+
         vista.txtNombreKit.setText("");
+        vista.txtDescripcionKit.setText("");
+        vista.txtCantidadKit.setText("");
+        vista.comboBoxKitEmpresa.setSelectedIndex(-1);
+        vista.comboKitProducto.setSelectedIndex(-1);
+        vista.dateFechaCreacionKit.setDate(null);
+        vista.dateFechaActualizacionKit.setDate(null);
+        vista.txtPrecioKit.setText("");
+        vista.sliderKitEducativo.setValue(0);
         vista.txtBuscarKitEducativo.setText("");
     }
 
