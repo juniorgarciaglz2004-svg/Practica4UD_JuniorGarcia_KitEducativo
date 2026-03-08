@@ -330,7 +330,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 vista.txtDescripcionEmpresa.setText(empresa.getDescripcion());
                 vista.txtUbicacionEmpresa.setText(empresa.getUbicacion());
                 vista.sliderValorcaion.setValue(empresa.getValoracion());
-                
+
             }
         } else if (e.getSource() == vista.listKitEducativo) {
             if (vista.listKitEducativo.getSelectedValue() != null) {
